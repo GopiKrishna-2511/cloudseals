@@ -1,0 +1,44 @@
+spring:
+  profiles:
+    active: local  # Change this for different environments
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/mvpcloudseal
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
+
+---
+spring:
+  config:
+    activate:
+      on-profile: qa
+  datasource:
+    url: jdbc:mysql://172.20.96.3:3306/mvpcloudseal
+    username: gopi
+    password: Sg@2511k
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:mysql://172.20.96.3:3306/mvpcloudseal
+    username: gopi
+    password: Sg@2511k
+  jpa:
+    hibernate:
+      ddl-auto: validate
