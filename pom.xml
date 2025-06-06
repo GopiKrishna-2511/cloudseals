@@ -49,11 +49,11 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.cloud.sql/mysql-socket-factory -->
 		<!-- https://mvnrepository.com/artifact/com.google.cloud.sql/mysql-socket-factory -->
-		<!--<dependency>
+		<dependency>
 		    <groupId>com.google.cloud.sql</groupId>
 		    <artifactId>mysql-socket-factory</artifactId>
 		    <version>1.10.0</version>
-		</dependency>-->
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
