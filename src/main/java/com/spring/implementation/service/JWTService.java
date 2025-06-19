@@ -3,6 +3,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +15,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import org.springframework.beans.factory.annotation.Value;
+
 
 @Service
+@Slf4j
 public class JWTService {
 
 
-    private String secretkey = "";
+    private String secretkey = "a-string-secret-at-least-256-bits-long";
+
 
     public JWTService() {
 
@@ -57,6 +62,7 @@ public class JWTService {
 
     private <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
         final Claims claims = extractAllClaims(token);
+        log.info("jwtfilter claims subject:{} {}",claims.getSubject(),claims.getExpiration());
         return claimResolver.apply(claims);
     }
 
