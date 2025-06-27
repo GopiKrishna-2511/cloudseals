@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 public class JWTService {
 
 
-    private String secretkey = "a-string-secret-at-least-256-bits-long";
+    private String secretkey = "";
 
 
     public JWTService() {

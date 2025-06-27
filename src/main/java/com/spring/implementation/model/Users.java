@@ -4,10 +4,10 @@ import lombok.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
+import java.sql.Timestamp;
 
 
-
-@Table(name = "Users")
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,8 +16,15 @@ import jakarta.persistence.Id;
 @Data
 public class Users {
     @Id
-    private int id;
+    private Integer id;
     private String username;
     private String password;
+    @Column(name = "organization_id", updatable = false)
+    private Long organizationId;
+    private String role;
+    private String email;
+    private String status;
+    @Column(name = "created_at", updatable = false)
+    private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 
 }
