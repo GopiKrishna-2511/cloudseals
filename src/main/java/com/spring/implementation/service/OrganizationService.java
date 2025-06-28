@@ -1,6 +1,6 @@
 package com.spring.implementation.service;
 
-import com.spring.implementation.model.Organization;
+import com.spring.implementation.model.Organizations;
 import com.spring.implementation.repository.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,28 +16,31 @@ public class OrganizationService {
     @Autowired
     private OrganizationRepository organizationRepository;
 
-    public List<Organization> getAllOrganizations() {
+    public List<Organizations> getAllOrganizations() {
         return organizationRepository.findAll();
     }
 
-    public Optional<Organization> getOrganizationById(Long id) {
+    public Optional<Organizations> getOrganizationById(Long id) {
         return organizationRepository.findById(id);
     }
 
-    public ResponseEntity<Organization> createOrganization(Organization organization) {
-        Organization savedOrg = organizationRepository.save(organization);
+    public ResponseEntity<Organizations> createOrganization(Organizations organization) {
+        Organizations savedOrg = organizationRepository.save(organization);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedOrg);
     }
 
-    public ResponseEntity<Organization> updateOrganization(Long id, Organization newOrgData) {
-        Optional<Organization> existingOrg = organizationRepository.findById(id);
+    public ResponseEntity<Organizations> updateOrganization(Long id, Organizations newOrgData) {
+        Optional<Organizations> existingOrg = organizationRepository.findById(id);
         if (existingOrg.isPresent()) {
-            Organization org = existingOrg.get();
+            Organizations org = existingOrg.get();
             org.setName(newOrgData.getName());
-            org.setType(newOrgData.getType());
+            org.setDomain(newOrgData.getDomain());
+
+           /* org.setType(newOrgData.getType());
             org.setEmail(newOrgData.getEmail());
             org.setPhone(newOrgData.getPhone());
-            org.setAddress(newOrgData.getAddress());
+            org.setAddress(newOrgData.getAddress());*/
+
             return ResponseEntity.ok(organizationRepository.save(org));
         }
         return ResponseEntity.notFound().build();
