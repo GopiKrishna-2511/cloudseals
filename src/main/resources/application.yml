@@ -24,7 +24,7 @@ spring:
     activate:
       on-profile: qa
   datasource:
-    url: jdbc:mysql://172.20.96.5:3306/mvpcloudseal
+    url: jdbc:mysql://172.20.96.5:3306/MVPCLOUDSEALS
     username: gopi
     password: Gmail@123
   jpa:
@@ -38,7 +38,7 @@ spring:
     activate:
       on-profile: prod
   datasource:
-    url: jdbc:mysql://172.20.96.5:3306/mvpcloudseal
+    url: jdbc:mysql://172.20.96.5:3306/MVPCLOUDSEALS
     username: gopi
     password: Gmail@123
   jpa:
