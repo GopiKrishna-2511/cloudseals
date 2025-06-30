@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 
 @Entity
@@ -17,7 +18,7 @@ import java.sql.Timestamp;
 public class Organizations {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private BigInteger id;
 
     private String name;
 
