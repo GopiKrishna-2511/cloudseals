@@ -4,6 +4,7 @@ import lombok.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 
 
@@ -20,7 +21,7 @@ public class Users {
     private String username;
     private String password;
     @Column(name = "organization_id", updatable = false)
-    private Long organizationId;
+    private BigInteger organizationId;
     private String role;
     private String email;
     private String status;
