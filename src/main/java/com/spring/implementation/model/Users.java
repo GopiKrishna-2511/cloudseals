@@ -23,7 +23,7 @@ public class Users {
     private String password;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "organization_id", nullable = false)
+    @JoinColumn(name = "organization_id", referencedColumnName = "id", nullable = false)
     private Organizations organizations;
 
     private String role;
