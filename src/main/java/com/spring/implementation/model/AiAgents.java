@@ -1,3 +1,4 @@
+/*
 package com.spring.implementation.model;
 
 import jakarta.persistence.*;
@@ -47,4 +48,4 @@ public class AiAgents {
     }
 
 
-}
+}*/
