@@ -17,11 +17,15 @@ import java.sql.Timestamp;
 @Data
 public class Users {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String username;
     private String password;
-    @Column(name = "organization_id", updatable = false)
-    private BigInteger organizationId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "organization_id", nullable = false)
+    private Organizations organizations;
+
     private String role;
     private String email;
     private String status;
