@@ -5,6 +5,7 @@ import com.spring.implementation.model.UserPrincipal;
 import com.spring.implementation.model.Users;
 import com.spring.implementation.repository.OrganizationRepository;
 import com.spring.implementation.repository.UserRepo;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,20 +23,14 @@ import java.util.Random;
 import java.util.UUID;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class UserService {
 
-    @Autowired
-    private JWTService jwtService;
-
-    @Autowired
-    AuthenticationManager authManager;
-
-    @Autowired
-    private UserRepo repo;
-
-    @Autowired
-    OrganizationRepository organizationRepository;
+    private  final JWTService jwtService;
+    private  final  AuthenticationManager authManager;
+    private  final  UserRepo repo;
+    private  final OrganizationRepository organizationRepository;
     private final Random random = new Random();
 
 
