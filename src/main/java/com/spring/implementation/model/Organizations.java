@@ -6,8 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigInteger;
-import java.sql.Timestamp;
+
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "organizations")
@@ -17,17 +18,21 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class Organizations {
     @Id
-    private BigInteger id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
+    @Column(length = 128, nullable = false)
     private String name;
 
+    @Column(length = 128, nullable = false)
     private String domain;
-   /* private String type;
-    private String email;
-    private String phone;
-    private String address;*/
 
-    @Column(name = "created_at", updatable = false)
-    private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 
 }

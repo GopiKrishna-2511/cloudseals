@@ -4,6 +4,7 @@ import com.spring.implementation.model.Users;
 import com.spring.implementation.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -27,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public Users getUser(@PathVariable Integer id){
+    public ResponseEntity<Users> getUser(@PathVariable Integer id){
         log.info("get user: {}", id);
         return service.loadUserById(id);
     }
