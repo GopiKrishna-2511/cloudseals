@@ -17,7 +17,6 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class Organizations {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigInteger id;
 
     private String name;
