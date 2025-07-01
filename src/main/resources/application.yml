@@ -30,7 +30,7 @@ spring:
     password: Gmail@123
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
 
 
 ---
@@ -44,7 +44,7 @@ spring:
     password: Gmail@123
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
 
 
 
