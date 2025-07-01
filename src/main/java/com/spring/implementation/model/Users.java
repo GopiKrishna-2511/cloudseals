@@ -5,7 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 
-import java.sql.Timestamp;
+
+import java.time.LocalDateTime;
 
 
 @Table(name = "users")
@@ -19,17 +20,35 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String username;
-    private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "organization_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "organization_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Organizations organizations;
 
-    private String role;
+    @Column(length = 128, nullable = false)
+    private String username;
+
+    @Column(length = 128, nullable = false)
     private String email;
-    private String status;
-    @Column(name = "created_at", updatable = false)
-    private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
+
+    @Column(length = 50, nullable = false)
+    private String role;
+
+    @Column(name = "password", length = 256)
+    private String password;
+
+    @Column(length = 20)
+    private String status ;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        if (this.status == null) this.status = "active";
+    }
+
 
 }
