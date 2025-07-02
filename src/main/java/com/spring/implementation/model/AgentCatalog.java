@@ -1,58 +1,46 @@
 package com.spring.implementation.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-
-@Table(name = "Agent_Catalog")
-@Getter
-@Setter
+@Entity
+@Table(name = "agent_catalog")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Data
 public class AgentCatalog {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer catalogId;
 
-    @Column(name = "catalog_id", nullable = false)
-    private Long catalogId;
-
-    @Column(name = "agent_name", nullable = false)
+    @Column(nullable = false, length = 100)
     private String agentName;
 
-    @Column(name = "agent_type")
-    private String agentType;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private AgentType agentType;
 
-    @Column(name = "version")
+    @Column(nullable = false, length = 50)
     private String version;
 
-    @Column(name = "config_json", columnDefinition = "TEXT")
+    @Column(columnDefinition = "json", nullable = false)
     private String configJson;
 
-    @Column(name = "created_at", updatable = false)
+    @Column(columnDefinition = "timestamp")
     private LocalDateTime createdAt;
 
-    @Column(name = "last_updated_at")
+    @Column(columnDefinition = "timestamp")
     private LocalDateTime lastUpdatedAt;
 
-    @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('active','inactive')", nullable = false)
+    private AgentStatus status;
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-        this.lastUpdatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        this.lastUpdatedAt = LocalDateTime.now();
-    }
-
-
+    public enum AgentType { DevOps, FinOps, SecOps }
+    public enum AgentStatus { active, inactive }
 }
