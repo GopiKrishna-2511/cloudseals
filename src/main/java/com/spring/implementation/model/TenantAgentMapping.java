@@ -1,45 +1,46 @@
 package com.spring.implementation.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-
-@Table(name = "Tenant_Agent_Mapping")
-@Getter
-@Setter
+@Entity
+@Table(name = "tenant_agent_mapping")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Data
 public class TenantAgentMapping {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer mappingId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "organization_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "organization_id", nullable = false)
     private Organizations organizations;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name = "catalog_id", nullable = false)
     private AgentCatalog agentCatalog;
 
-    @Column(name = "tenant_specific_config_json", columnDefinition = "TEXT")
+
+    @Column(name = "tenant_specific_config_json",columnDefinition = "json")
     private String tenantSpecificConfigJson;
 
-    @Column(name = "deployed_version")
+    @Column(length = 50)
     private String deployedVersion;
 
-    @Column(name = "deployment_status")
-    private String deploymentStatus;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('pending','deployed','failed')", nullable = false)
+    private DeploymentStatus deploymentStatus = DeploymentStatus.pending;
 
-    @Column(name = "created_at", updatable = false)
+    @Column(columnDefinition = "timestamp")
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @Column(columnDefinition = "timestamp")
     private LocalDateTime updatedAt;
 
     @PrePersist
@@ -47,10 +48,5 @@ public class TenantAgentMapping {
         this.createdAt = LocalDateTime.now();
     }
 
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
-
-
+    public enum DeploymentStatus { pending, deployed, failed }
 }
