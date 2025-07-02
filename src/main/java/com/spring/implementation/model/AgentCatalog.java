@@ -31,15 +31,18 @@ public class AgentCatalog {
     @Column(columnDefinition = "json", nullable = false)
     private String configJson;
 
-    @Column(columnDefinition = "timestamp")
     private LocalDateTime createdAt;
 
-    @Column(columnDefinition = "timestamp")
     private LocalDateTime lastUpdatedAt;
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM('active','inactive')", nullable = false)
     private AgentStatus status;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     public enum AgentType { DevOps, FinOps, SecOps }
     public enum AgentStatus { active, inactive }
