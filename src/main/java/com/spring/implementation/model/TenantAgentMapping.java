@@ -37,10 +37,10 @@ public class TenantAgentMapping {
     @Column(columnDefinition = "ENUM('pending','deployed','failed')", nullable = false)
     private DeploymentStatus deploymentStatus = DeploymentStatus.pending;
 
-    @Column(columnDefinition = "timestamp")
+
     private LocalDateTime createdAt;
 
-    @Column(columnDefinition = "timestamp")
+
     private LocalDateTime updatedAt;
 
     @PrePersist
