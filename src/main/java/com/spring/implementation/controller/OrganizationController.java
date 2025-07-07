@@ -2,6 +2,7 @@ package com.spring.implementation.controller;
 
 import com.spring.implementation.model.Organizations;
 import com.spring.implementation.service.OrganizationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +11,11 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("cloudseal/v1/api/organizations")
 public class OrganizationController {
 
-    @Autowired
-    private OrganizationService organizationService;
+    private final OrganizationService organizationService;
 
     @GetMapping
     public ResponseEntity<List<Organizations>> getAllOrganizations() {
