@@ -10,14 +10,15 @@
 	</parent>
 	<groupId>com.spring.implementation</groupId>
 	<artifactId>cloudseals</artifactId>
-	<version>0.2.1-SNAPSHOT</version>
+	<version>0.2.2-SNAPSHOT</version>
 	<!--<name>RestApi</name>-->
 	<description>CloudSeals Spring Boot AI</description>
 	<properties>
 		<java.version>23</java.version>
 		<sonar.coverage.exclusions>
-			**/model/**, **/config/**, **/repository/**,
-			**/service/**,**/controller/**
+			**/model/**,
+			**/config/**,
+			**/repository/**
 		</sonar.coverage.exclusions>
 
 	</properties>
