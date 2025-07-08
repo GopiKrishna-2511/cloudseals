@@ -5,22 +5,22 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.5</version>
+		<version>3.5.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.spring.implementation</groupId>
 	<artifactId>cloudseals</artifactId>
-	<version>0.2.3-SNAPSHOT</version>
+	<version>0.2.4-SNAPSHOT</version>
 	<!--<name>RestApi</name>-->
 	<description>CloudSeals Spring Boot AI</description>
 	<properties>
 		<java.version>23</java.version>
+		<jacoco.version>0.8.13</jacoco.version>
 		<sonar.coverage.exclusions>
 			**/model/**,
 			**/config/**,
 			**/repository/**
 		</sonar.coverage.exclusions>
-
 	</properties>
 	<dependencies>
 		<dependency>
@@ -98,7 +98,27 @@
 		    <version>1.10.0</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>5.11.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-testcontainers</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>mysql</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -135,7 +155,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.11</version> <!-- Use latest stable -->
+				<version>${jacoco.version}</version>
 				<executions>
 					<execution>
 						<id>prepare-agent</id>
@@ -145,20 +165,27 @@
 					</execution>
 					<execution>
 						<id>report</id>
-						<phase>test</phase>
+						<phase>verify</phase>
 						<goals>
 							<goal>report</goal>
 						</goals>
+
+						<configuration>
+							<outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>
+							<formats>
+								<format>HTML</format>
+								<format>XML</format>
+							</formats>
+							<excludes>
+								<exclude>**/model/**</exclude>
+								<exclude>**/config/**</exclude>
+								<exclude>**/repository/**</exclude>
+							</excludes>
+
+						</configuration>
+
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M7</version>
-				<configuration>
-					<argLine>-Dnet.bytebuddy.experimental=true</argLine>
-				</configuration>
 			</plugin>
 
 
