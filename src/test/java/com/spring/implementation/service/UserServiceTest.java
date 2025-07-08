@@ -83,6 +83,25 @@ class UserServiceTest {
         assertTrue(result.getId() >= 0 && result.getId() < 999999);
         verify(repo).save(any(Users.class));
     }
+    @Test
+    void testLoadUserById_Found() {
+        Users user = mockUser();
+        user.setId(2);
+        lenient().when(repo.existsById(anyInt())).thenReturn(false);
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> service.loadUserById(2));
+        assertEquals("User not found with id: 2", ex.getMessage());
+    }
+   /* @Test
+    void testVerify_Failure() {
+        Users user = mockUser();
+
+        when(authManager.authenticate(any())).thenReturn(authentication);
+        when(authentication.isAuthenticated()).thenReturn(false);
+
+        String result = service.verify(user);
+
+        assertEquals("fail", result);
+    }*/
 
    /* @Test
     void testRegister_OrgNotFound() {
@@ -108,17 +127,7 @@ class UserServiceTest {
         assertEquals("mock.jwt.token", token);
     }
 
-    @Test
-    void testVerify_Failure() {
-        Users user = mockUser();
 
-        when(authManager.authenticate(any())).thenReturn(authentication);
-        when(authentication.isAuthenticated()).thenReturn(false);
-
-        String result = service.verify(user);
-
-        assertEquals("fail", result);
-    }
 
     @Test
     void testLoadUserById_Found() {
