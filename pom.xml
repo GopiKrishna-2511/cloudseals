@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.spring.implementation</groupId>
 	<artifactId>cloudseals</artifactId>
-	<version>0.2.5-SNAPSHOT</version>
+	<version>0.2.6-SNAPSHOT</version>
 	<!--<name>RestApi</name>-->
 	<description>CloudSeals Spring Boot AI</description>
 	<properties>
@@ -19,7 +19,8 @@
 		<sonar.coverage.exclusions>
 			**/model/**,
 			**/config/**,
-			**/repository/**
+			**/repository/**,
+			**/com.spring.implementation.CloudSealsApplication.java
 		</sonar.coverage.exclusions>
 	</properties>
 	<dependencies>
@@ -180,6 +181,7 @@
 								<exclude>**/model/**</exclude>
 								<exclude>**/config/**</exclude>
 								<exclude>**/repository/**</exclude>
+								<exclude>**/com.spring.implementation.CloudSealsApplication.java</exclude>
 							</excludes>
 
 						</configuration>
