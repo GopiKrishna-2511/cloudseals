@@ -3,7 +3,6 @@ package com.spring.implementation.controller;
 import com.spring.implementation.model.AuditLog;
 import com.spring.implementation.service.AuditLogService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
