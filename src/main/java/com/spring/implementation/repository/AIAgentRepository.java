@@ -1,8 +1,8 @@
 package com.spring.implementation.repository;
 
 
-import com.spring.implementation.model.AIAgent;
+import com.spring.implementation.model.AiAgent;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AIAgentRepository extends JpaRepository<AIAgent, Integer> {
+public interface AIAgentRepository extends JpaRepository<AiAgent, Integer> {
 }

@@ -65,7 +65,7 @@ class UserServiceTest {
 
     @BeforeEach
     void clearRandomIds() {
-        when(repo.existsById(anyInt())).thenReturn(false); // simplify unique ID check
+     //   when(repo.existsById(anyInt())).thenReturn(false); // simplify unique ID check
     }
 
     @Test
@@ -91,66 +91,74 @@ class UserServiceTest {
         RuntimeException ex = assertThrows(RuntimeException.class, () -> service.loadUserById(2));
         assertEquals("User not found with id: 2", ex.getMessage());
     }
-   /* @Test
-    void testVerify_Failure() {
-        Users user = mockUser();
 
-        when(authManager.authenticate(any())).thenReturn(authentication);
-        when(authentication.isAuthenticated()).thenReturn(false);
+    @Test
+    void verify_validCredentials_shouldReturnToken() {
+        Users user = Users.builder()
+                .username("gopi.dev")
+                .password("securePass")
+                .build();
+
+        Authentication authMock = mock(Authentication.class);
+
+        when(authManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenReturn(authMock);
+
+        when(authMock.isAuthenticated()).thenReturn(true);
+        when(jwtService.generateToken("gopi.dev")).thenReturn("jwt-token");
+
+        String result = service.verify(user);
+
+        assertEquals("jwt-token", result);
+        verify(authManager).authenticate(any());
+        verify(jwtService).generateToken("gopi.dev");
+    }
+
+    @Test
+    void verify_invalidCredentials_shouldReturnFail() {
+        Users user = Users.builder()
+                .username("invalidUser")
+                .password("badPass")
+                .build();
+
+        Authentication authMock = mock(Authentication.class);
+
+        when(authManager.authenticate(any())).thenReturn(authMock);
+        when(authMock.isAuthenticated()).thenReturn(false);
 
         String result = service.verify(user);
 
         assertEquals("fail", result);
-    }*/
-
-   /* @Test
-    void testRegister_OrgNotFound() {
-        Users inputUser = mockUser();
-        inputUser.setOrganizations(Organizations.builder().id(404).build());
-
-        when(organizationRepository.findById(404L)).thenReturn(Optional.empty());
-
-        RuntimeException ex = assertThrows(RuntimeException.class, () -> service.register(inputUser));
-        assertEquals("Organization ID not found", ex.getMessage());
-    }*/
-
-   /* @Test
-    void testVerify_Success() {
-        Users user = mockUser();
-
-        when(authManager.authenticate(any())).thenReturn(authentication);
-        when(authentication.isAuthenticated()).thenReturn(true);
-        when(jwtService.generateToken(user.getUsername())).thenReturn("mock.jwt.token");
-
-        String token = service.verify(user);
-
-        assertEquals("mock.jwt.token", token);
+        verify(authManager).authenticate(any());
+        verify(jwtService, never()).generateToken(any());
     }
 
-
-
     @Test
-    void testLoadUserById_Found() {
-        Users user = mockUser();
-        user.setId(2);
+    void loadUserById_found_shouldReturnUser() {
+        Users mockUser = Users.builder()
+                .id(10)
+                .username("gopi.dev")
+                .role("admin")
+                .build();
 
-        when(repo.findById(2)).thenReturn(Optional.of(user));
+        when(repo.findById(10)).thenReturn(Optional.of(mockUser));
 
-        ResponseEntity<Users> response = service.loadUserById(1);
+        ResponseEntity<Users> response = service.loadUserById(10);
 
         assertEquals(200, response.getStatusCodeValue());
         assertEquals("gopi.dev", response.getBody().getUsername());
     }
 
     @Test
-    void testLoadUserById_NotFound() {
-        when(repo.findById(404)).thenReturn(Optional.empty());
+    void loadUserById_notFound_shouldThrowException() {
+        when(repo.findById(99)).thenReturn(Optional.empty());
 
-        UsernameNotFoundException ex = assertThrows(
-                UsernameNotFoundException.class,
-                () -> service.loadUserById(404)
-        );
+        UsernameNotFoundException ex = assertThrows(UsernameNotFoundException.class, () -> {
+            service.loadUserById(99);
+        });
 
-        assertEquals("User not found with id: 404", ex.getMessage());
-    }*/
+        assertEquals("User not found with id: 99", ex.getMessage());
+    }
+
+
 }

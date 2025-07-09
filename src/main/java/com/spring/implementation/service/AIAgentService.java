@@ -1,10 +1,8 @@
 package com.spring.implementation.service;
 
 
-import com.spring.implementation.model.AIAgent;
-import com.spring.implementation.model.Users;
+import com.spring.implementation.model.AiAgent;
 import com.spring.implementation.repository.AIAgentRepository;
-import com.spring.implementation.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,15 +16,15 @@ public class AIAgentService {
     private final AIAgentRepository repository;
 
 
-    public AIAgent createAgent(AIAgent agent) {
+    public AiAgent createAgent(AiAgent agent) {
         return repository.save(agent);
     }
 
-    public List<AIAgent> getAllAgents() {
+    public List<AiAgent> getAllAgents() {
         return repository.findAll();
     }
 
-    public Optional<AIAgent> getAgentById(Integer id) {
+    public Optional<AiAgent> getAgentById(Integer id) {
         return repository.findById(id);
     }
 
@@ -34,8 +32,8 @@ public class AIAgentService {
         repository.deleteById(id);
     }
 
-    public AIAgent updateAgent(AIAgent aiAgent) {
-        AIAgent existing = repository.findById(aiAgent.getId())
+    public AiAgent updateAgent(AiAgent aiAgent) {
+        AiAgent existing = repository.findById(aiAgent.getId())
                 .orElseThrow(() -> new RuntimeException("Agent not found"));
         existing.setName(aiAgent.getName());
         existing.setAgentType(aiAgent.getAgentType());
