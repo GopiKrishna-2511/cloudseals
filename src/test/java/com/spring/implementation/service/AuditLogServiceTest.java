@@ -1,7 +1,7 @@
 package com.spring.implementation.service;
 
 import com.spring.implementation.model.AuditLog;
-import com.spring.implementation.model.AiAgent;
+import com.spring.implementation.model.AiAgents;
 import com.spring.implementation.repository.AIAgentRepository;
 import com.spring.implementation.repository.AuditLogRepository;
 
@@ -32,12 +32,12 @@ class AuditLogServiceTest {
     @InjectMocks
     private AuditLogService auditLogService;
 
-    private AiAgent mockAgent;
+    private AiAgents mockAgent;
     private AuditLog mockLog;
 
     @BeforeEach
     void setup() {
-        mockAgent = AiAgent.builder()
+        mockAgent = AiAgents.builder()
                 .id(101)
                 .name("InsightBot")
                 .status("active")
@@ -48,7 +48,7 @@ class AuditLogServiceTest {
                 .eventType("LOGIN")
                 .eventTime(LocalDateTime.now())
                 .detailsJson("{\"ip\":\"127.0.0.1\"}")
-                .aiAgent(mockAgent)
+                .aiAgents(mockAgent)
                 .build();
     }
 

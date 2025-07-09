@@ -1,11 +1,10 @@
 package com.spring.implementation.service;
 
-import com.spring.implementation.model.AiAgent;
+import com.spring.implementation.model.AiAgents;
 import com.spring.implementation.model.AuditLog;
 import com.spring.implementation.repository.AIAgentRepository;
 import com.spring.implementation.repository.AuditLogRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,10 +20,10 @@ public class AuditLogService {
 
     public AuditLog save(AuditLog auditLog) {
 
-        AiAgent existingAgent = aiAgentRepository.findById(auditLog.getAiAgent().getId())
-                .orElseThrow(() -> new RuntimeException("AIAgent not found with ID: " + auditLog.getAiAgent().getId()));
+        AiAgents existingAgent = aiAgentRepository.findById(auditLog.getAiAgents().getId())
+                .orElseThrow(() -> new RuntimeException("AIAgent not found with ID: " + auditLog.getAiAgents().getId()));
 
-        auditLog.setAiAgent(existingAgent);
+        auditLog.setAiAgents(existingAgent);
 
         return    auditLogRepository.save(auditLog);
     }

@@ -24,7 +24,7 @@ public class AuditLog {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "agent_id", nullable = false)
-    private AiAgent aiAgent;
+    private AiAgents aiAgents;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -38,4 +38,11 @@ public class AuditLog {
 
     @Column(name = "details_json", columnDefinition = "json")
     private String detailsJson;
+
+    @PrePersist
+    protected void onCreate() {
+        this.eventTime = LocalDateTime.now();
+
+    }
+
 }

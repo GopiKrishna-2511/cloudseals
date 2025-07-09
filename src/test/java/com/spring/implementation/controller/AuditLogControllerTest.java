@@ -2,7 +2,7 @@ package com.spring.implementation.controller;
 
 import com.spring.implementation.model.AuditLog;
 import com.spring.implementation.model.Organizations;
-import com.spring.implementation.model.AiAgent;
+import com.spring.implementation.model.AiAgents;
 import com.spring.implementation.model.Users;
 import com.spring.implementation.service.AuditLogService;
 
@@ -39,8 +39,8 @@ class AuditLogControllerTest {
                 .build();
     }
 
-    private AiAgent mockAgent() {
-        return AiAgent.builder()
+    private AiAgents mockAgent() {
+        return AiAgents.builder()
                 .id(101)
                 .name("InsightBot")
                 .status("active")
@@ -62,7 +62,7 @@ class AuditLogControllerTest {
                 .eventTime(LocalDateTime.now())
                 .detailsJson("{\"ip\":\"127.0.0.1\"}")
                 .organizations(mockOrg())
-                .aiAgent(mockAgent())
+                .aiAgents(mockAgent())
                 .users(mockUser())
                 .build();
     }

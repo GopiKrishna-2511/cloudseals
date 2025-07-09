@@ -27,20 +27,20 @@ class SubscriptionServiceTest {
 
     @Test
     void testGetAllSubscriptions() {
-        Subscription s1 = Subscription.builder().id(1).agentId("AG-01").subscriptionId("SUB-01").agentName("Agent One").build();
-        Subscription s2 = Subscription.builder().id(2).agentId("AG-02").subscriptionId("SUB-02").agentName("Agent Two").build();
+        Subscription s1 = Subscription.builder().id(1).agentId("AG-01").subscriptionId(1).agentName("Agent One").build();
+        Subscription s2 = Subscription.builder().id(2).agentId("AG-02").subscriptionId(1).agentName("Agent Two").build();
 
         when(subscriptionRepository.findAll()).thenReturn(List.of(s1, s2));
 
         List<Subscription> result = subscriptionService.getAllSubscriptions();
         assertEquals(2, result.size());
-        assertEquals("SUB-01", result.get(0).getSubscriptionId());
+        assertEquals(1, result.get(0).getSubscriptionId());
         verify(subscriptionRepository).findAll();
     }
 
     @Test
     void testGetSubscriptionById_Found() {
-        Subscription sub = Subscription.builder().id(1).agentId("AG-01").subscriptionId("SUB-01").agentName("Agent One").build();
+        Subscription sub = Subscription.builder().id(1).agentId("AG-01").subscriptionId(1).agentName("Agent One").build();
         when(subscriptionRepository.findById(1)).thenReturn(Optional.of(sub));
 
         Optional<Subscription> result = subscriptionService.getSubscriptionById(1);
@@ -60,8 +60,8 @@ class SubscriptionServiceTest {
 
     @Test
     void testSaveSubscription() {
-        Subscription sub = Subscription.builder().agentId("AG-03").subscriptionId("SUB-03").agentName("Agent Three").build();
-        Subscription saved = Subscription.builder().id(3).agentId("AG-03").subscriptionId("SUB-03").agentName("Agent Three").build();
+        Subscription sub = Subscription.builder().agentId("AG-03").subscriptionId(1).agentName("Agent Three").build();
+        Subscription saved = Subscription.builder().id(3).agentId("AG-03").subscriptionId(1).agentName("Agent Three").build();
 
         when(subscriptionRepository.save(sub)).thenReturn(saved);
 

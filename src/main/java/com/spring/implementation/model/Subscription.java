@@ -27,7 +27,7 @@ public class Subscription {
     private String agentName;
 
     @Column(name = "subscription_id")
-    private String subscriptionId;
+    private Integer subscriptionId;
 
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name = "tenant_id", nullable = false)

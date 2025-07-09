@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AiAgent {
+public class AiAgents {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

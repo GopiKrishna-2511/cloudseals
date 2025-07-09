@@ -28,8 +28,8 @@ class SubscriptionControllerTest {
 
     @Test
     void testGetAllSubscriptions() {
-        Subscription s1 = Subscription.builder().id(1).agentId("A1").agentName("Alpha").subscriptionId("S1").build();
-        Subscription s2 = Subscription.builder().id(2).agentId("A2").agentName("Beta").subscriptionId("S2").build();
+        Subscription s1 = Subscription.builder().id(1).agentId("A1").agentName("Alpha").subscriptionId(1).build();
+        Subscription s2 = Subscription.builder().id(2).agentId("A2").agentName("Beta").subscriptionId(1).build();
 
         when(subscriptionService.getAllSubscriptions()).thenReturn(List.of(s1, s2));
 
@@ -41,7 +41,7 @@ class SubscriptionControllerTest {
 
     @Test
     void testGetSubscriptionById_Found() {
-        Subscription sub = Subscription.builder().id(1).agentId("A1").agentName("Alpha").subscriptionId("S1").build();
+        Subscription sub = Subscription.builder().id(1).agentId("A1").agentName("Alpha").subscriptionId(1).build();
         when(subscriptionService.getSubscriptionById(1)).thenReturn(Optional.of(sub));
 
         ResponseEntity<Subscription> response = subscriptionController.getById(1);
@@ -62,8 +62,8 @@ class SubscriptionControllerTest {
 
     @Test
     void testCreateSubscription() {
-        Subscription newSub = Subscription.builder().agentId("A3").agentName("Gamma").subscriptionId("S3").build();
-        Subscription savedSub = Subscription.builder().id(3).agentId("A3").agentName("Gamma").subscriptionId("S3").build();
+        Subscription newSub = Subscription.builder().agentId("A3").agentName("Gamma").subscriptionId(1).build();
+        Subscription savedSub = Subscription.builder().id(3).agentId("A3").agentName("Gamma").subscriptionId(1).build();
 
         when(subscriptionService.saveSubscription(newSub)).thenReturn(savedSub);
 

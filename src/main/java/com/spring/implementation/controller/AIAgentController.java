@@ -1,7 +1,7 @@
 package com.spring.implementation.controller;
 
 
-import com.spring.implementation.model.AiAgent;
+import com.spring.implementation.model.AiAgents;
 import com.spring.implementation.service.AIAgentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,24 +17,24 @@ public class AIAgentController {
     private final AIAgentService service;
 
     @PostMapping
-    public ResponseEntity<AiAgent> create(@RequestBody AiAgent agent) {
+    public ResponseEntity<AiAgents> create(@RequestBody AiAgents agent) {
         return ResponseEntity.ok(service.createAgent(agent));
     }
 
     @GetMapping
-    public List<AiAgent> getAll() {
+    public List<AiAgents> getAll() {
         return service.getAllAgents();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AiAgent> getById(@PathVariable Integer id) {
+    public ResponseEntity<AiAgents> getById(@PathVariable Integer id) {
         return service.getAgentById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AiAgent> update(@RequestBody AiAgent agent) {
+    public ResponseEntity<AiAgents> update(@RequestBody AiAgents agent) {
         return ResponseEntity.ok(service.updateAgent(agent));
     }
 
