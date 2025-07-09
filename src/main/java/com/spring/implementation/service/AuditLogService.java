@@ -21,10 +21,10 @@ public class AuditLogService {
 
     public AuditLog save(AuditLog auditLog) {
 
-        AiAgent existingAgent = aiAgentRepository.findById(auditLog.getAiAgents().getId())
-                .orElseThrow(() -> new RuntimeException("AIAgent not found with ID: " + auditLog.getAiAgents().getId()));
+        AiAgent existingAgent = aiAgentRepository.findById(auditLog.getAiAgent().getId())
+                .orElseThrow(() -> new RuntimeException("AIAgent not found with ID: " + auditLog.getAiAgent().getId()));
 
-        auditLog.setAiAgents(existingAgent);
+        auditLog.setAiAgent(existingAgent);
 
         return    auditLogRepository.save(auditLog);
     }
