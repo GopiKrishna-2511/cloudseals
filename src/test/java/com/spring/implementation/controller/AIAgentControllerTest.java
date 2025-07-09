@@ -1,6 +1,6 @@
 package com.spring.implementation.controller;
 
-import com.spring.implementation.model.AIAgent;
+import com.spring.implementation.model.AiAgent;
 import com.spring.implementation.model.Organizations;
 import com.spring.implementation.model.Users;
 import com.spring.implementation.service.AIAgentService;
@@ -46,8 +46,8 @@ class AIAgentControllerTest {
             .build();
     }
 
-    private AIAgent buildAgent(Integer id, String name) {
-        return AIAgent.builder()
+    private AiAgent buildAgent(Integer id, String name) {
+        return AiAgent.builder()
             .id(id)
             .organizations(mockOrg())
             .name(name)
@@ -61,12 +61,12 @@ class AIAgentControllerTest {
 
     @Test
     void testCreateAgent() {
-        AIAgent request = buildAgent(null, "MetricsBot");
-        AIAgent saved = buildAgent(1, "MetricsBot");
+        AiAgent request = buildAgent(null, "MetricsBot");
+        AiAgent saved = buildAgent(1, "MetricsBot");
 
         when(service.createAgent(request)).thenReturn(saved);
 
-        ResponseEntity<AIAgent> response = controller.create(request);
+        ResponseEntity<AiAgent> response = controller.create(request);
 
         assertEquals(200, response.getStatusCodeValue());
         assertEquals("MetricsBot", response.getBody().getName());
@@ -76,12 +76,12 @@ class AIAgentControllerTest {
 
     @Test
     void testGetAllAgents() {
-        AIAgent agent1 = buildAgent(1, "GopiAI");
-        AIAgent agent2 = buildAgent(2, "SecureAI");
+        AiAgent agent1 = buildAgent(1, "GopiAI");
+        AiAgent agent2 = buildAgent(2, "SecureAI");
 
         when(service.getAllAgents()).thenReturn(List.of(agent1, agent2));
 
-        List<AIAgent> result = controller.getAll();
+        List<AiAgent> result = controller.getAll();
 
         assertEquals(2, result.size());
         assertEquals("GopiAI", result.get(0).getName());
@@ -90,11 +90,11 @@ class AIAgentControllerTest {
 
     @Test
     void testGetAgentById_Found() {
-        AIAgent agent = buildAgent(3, "AuditBot");
+        AiAgent agent = buildAgent(3, "AuditBot");
 
         when(service.getAgentById(3)).thenReturn(Optional.of(agent));
 
-        ResponseEntity<AIAgent> response = controller.getById(3);
+        ResponseEntity<AiAgent> response = controller.getById(3);
 
         assertEquals(200, response.getStatusCodeValue());
         assertEquals("AuditBot", response.getBody().getName());
@@ -104,7 +104,7 @@ class AIAgentControllerTest {
     void testGetAgentById_NotFound() {
         when(service.getAgentById(99)).thenReturn(Optional.empty());
 
-        ResponseEntity<AIAgent> response = controller.getById(99);
+        ResponseEntity<AiAgent> response = controller.getById(99);
 
         assertEquals(404, response.getStatusCodeValue());
         assertNull(response.getBody());
@@ -112,11 +112,11 @@ class AIAgentControllerTest {
 
     @Test
     void testUpdateAgent() {
-        AIAgent updated = buildAgent(4, "UpdatedAI");
+        AiAgent updated = buildAgent(4, "UpdatedAI");
 
         when(service.updateAgent(updated)).thenReturn(updated);
 
-        ResponseEntity<AIAgent> response = controller.update(updated);
+        ResponseEntity<AiAgent> response = controller.update(updated);
 
         assertEquals(200, response.getStatusCodeValue());
         assertEquals("UpdatedAI", response.getBody().getName());

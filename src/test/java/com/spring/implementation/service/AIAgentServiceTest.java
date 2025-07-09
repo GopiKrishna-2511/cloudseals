@@ -1,6 +1,6 @@
 package com.spring.implementation.service;
 
-import com.spring.implementation.model.AIAgent;
+import com.spring.implementation.model.AiAgent;
 import com.spring.implementation.model.Organizations;
 import com.spring.implementation.model.Users;
 import com.spring.implementation.repository.AIAgentRepository;
@@ -44,8 +44,8 @@ class AIAgentServiceTest {
                 .build();
     }
 
-    private AIAgent buildAgent(Integer id, String name) {
-        return AIAgent.builder()
+    private AiAgent buildAgent(Integer id, String name) {
+        return AiAgent.builder()
                 .id(id)
                 .organizations(mockOrg())
                 .name(name)
@@ -59,12 +59,12 @@ class AIAgentServiceTest {
 
     @Test
     void testCreateAgent() {
-        AIAgent request = buildAgent(null, "AuditBot");
-        AIAgent saved = buildAgent(1, "AuditBot");
+        AiAgent request = buildAgent(null, "AuditBot");
+        AiAgent saved = buildAgent(1, "AuditBot");
 
         when(repository.save(request)).thenReturn(saved);
 
-        AIAgent result = service.createAgent(request);
+        AiAgent result = service.createAgent(request);
 
         assertNotNull(result);
         assertEquals("AuditBot", result.getName());
@@ -73,12 +73,12 @@ class AIAgentServiceTest {
 
     @Test
     void testGetAllAgents() {
-        AIAgent a1 = buildAgent(1, "BotA");
-        AIAgent a2 = buildAgent(2, "BotB");
+        AiAgent a1 = buildAgent(1, "BotA");
+        AiAgent a2 = buildAgent(2, "BotB");
 
         when(repository.findAll()).thenReturn(List.of(a1, a2));
 
-        List<AIAgent> result = service.getAllAgents();
+        List<AiAgent> result = service.getAllAgents();
 
         assertEquals(2, result.size());
         assertEquals("BotA", result.get(0).getName());
@@ -86,10 +86,10 @@ class AIAgentServiceTest {
 
     @Test
     void testGetAgentById_Found() {
-        AIAgent agent = buildAgent(3, "VisionBot");
+        AiAgent agent = buildAgent(3, "VisionBot");
         when(repository.findById(3)).thenReturn(Optional.of(agent));
 
-        Optional<AIAgent> result = service.getAgentById(3);
+        Optional<AiAgent> result = service.getAgentById(3);
 
         assertTrue(result.isPresent());
         assertEquals("VisionBot", result.get().getName());
@@ -99,7 +99,7 @@ class AIAgentServiceTest {
     void testGetAgentById_NotFound() {
         when(repository.findById(99)).thenReturn(Optional.empty());
 
-        Optional<AIAgent> result = service.getAgentById(99);
+        Optional<AiAgent> result = service.getAgentById(99);
 
         assertTrue(result.isEmpty());
     }
@@ -115,8 +115,8 @@ class AIAgentServiceTest {
 
     @Test
     void testUpdateAgent_Success() {
-        AIAgent existing = buildAgent(4, "LegacyBot");
-        AIAgent updated = buildAgent(4, "ModernBot");
+        AiAgent existing = buildAgent(4, "LegacyBot");
+        AiAgent updated = buildAgent(4, "ModernBot");
         updated.setAgentType("AI");
         updated.setStatus("inactive");
         updated.setConfigJson("{\"trace\":true}");
@@ -124,7 +124,7 @@ class AIAgentServiceTest {
         when(repository.findById(4)).thenReturn(Optional.of(existing));
         when(repository.save(existing)).thenReturn(updated);
 
-        AIAgent result = service.updateAgent(updated);
+        AiAgent result = service.updateAgent(updated);
 
         assertEquals("ModernBot", result.getName());
         assertEquals("AI", result.getAgentType());
@@ -133,7 +133,7 @@ class AIAgentServiceTest {
 
     @Test
     void testUpdateAgent_NotFound() {
-        AIAgent updated = buildAgent(5, "GhostBot");
+        AiAgent updated = buildAgent(5, "GhostBot");
 
         when(repository.findById(5)).thenReturn(Optional.empty());
 
