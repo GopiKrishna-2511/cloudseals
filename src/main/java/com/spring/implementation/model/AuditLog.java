@@ -24,7 +24,7 @@ public class AuditLog {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "agent_id", nullable = false)
-    private AiAgent aiAgents;
+    private AiAgent aiAgent;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

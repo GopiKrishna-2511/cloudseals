@@ -48,7 +48,7 @@ class AuditLogServiceTest {
                 .eventType("LOGIN")
                 .eventTime(LocalDateTime.now())
                 .detailsJson("{\"ip\":\"127.0.0.1\"}")
-                .aiAgents(mockAgent)
+                .aiAgent(mockAgent)
                 .build();
     }
 

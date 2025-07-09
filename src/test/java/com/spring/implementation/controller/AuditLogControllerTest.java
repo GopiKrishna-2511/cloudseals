@@ -62,7 +62,7 @@ class AuditLogControllerTest {
                 .eventTime(LocalDateTime.now())
                 .detailsJson("{\"ip\":\"127.0.0.1\"}")
                 .organizations(mockOrg())
-                .aiAgents(mockAgent())
+                .aiAgent(mockAgent())
                 .users(mockUser())
                 .build();
     }
