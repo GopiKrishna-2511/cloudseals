@@ -183,6 +183,7 @@
 								<exclude>**/model/**</exclude>
 								<exclude>**/config/**</exclude>
 								<exclude>**/repository/**</exclude>
+								<exclude>**/exception/**</exclude>
 								<exclude>**/com.spring.implementation.CloudSealsApplication.java</exclude>
 							</excludes>
 
