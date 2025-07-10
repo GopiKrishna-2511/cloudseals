@@ -1,5 +1,8 @@
 package com.spring.implementation.controller;
 
+import com.spring.implementation.exception.DuplicateResourceException;
+import com.spring.implementation.exception.ResourceNotFoundException;
+import com.spring.implementation.model.ErrorResponse;
 import com.spring.implementation.model.Users;
 import com.spring.implementation.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -17,15 +20,22 @@ public class UserController {
     private UserService service;
 
     @PostMapping("/register")
-    public Users register(@RequestBody Users user) {
-        log.info("register user: {}", user);
-        return service.register(user);
+    public ResponseEntity<?> register(@RequestBody Users user) {
+        try {
+            log.info("register user: {}", user);
+            return ResponseEntity.ok(service.register(user));
+
+        } catch (ResourceNotFoundException  | DuplicateResourceException ex) {
+            return ResponseEntity
+                    .status(ex.getStatus())
+                    .body(ex.getMessage());
+        }
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody Users user) {
         log.info("login user: {}", user);
-      String resp=  service.verify(user);
+        String resp = service.verify(user);
         if (resp != null && !resp.isEmpty()) {
             return ResponseEntity.ok(resp); // Token or success message
         } else {
@@ -35,7 +45,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<Users> getUser(@PathVariable Integer id){
+    public ResponseEntity<Users> getUser(@PathVariable Integer id) {
         log.info("get user: {}", id);
         return service.loadUserById(id);
     }

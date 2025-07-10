@@ -1,5 +1,8 @@
 package com.spring.implementation.service;
 
+import com.spring.implementation.exception.DuplicateResourceException;
+import com.spring.implementation.exception.ResourceNotFoundException;
+import com.spring.implementation.model.ErrorResponse;
 import com.spring.implementation.model.Organizations;
 import com.spring.implementation.model.UserPrincipal;
 import com.spring.implementation.model.Users;
@@ -8,6 +11,7 @@ import com.spring.implementation.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,10 +31,10 @@ import java.util.UUID;
 @Service
 public class UserService {
 
-    private  final JWTService jwtService;
-    private  final  AuthenticationManager authManager;
-    private  final  UserRepo repo;
-    private  final OrganizationRepository organizationRepository;
+    private final JWTService jwtService;
+    private final AuthenticationManager authManager;
+    private final UserRepo repo;
+    private final OrganizationRepository organizationRepository;
     private final Random random = new Random();
 
 
@@ -40,26 +44,29 @@ public class UserService {
 
         Organizations org = organizationRepository.findById(
                         user.getOrganizations().getId().longValue())
-                .orElseThrow(() -> new RuntimeException("Organization ID not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("OrganizationId", "id", user.getOrganizations().getId().longValue()));
 
-        int randomId;
+        if (repo.findByUsername(user.getUsername()) != null) {
+            throw new DuplicateResourceException("User", "username", user.getUsername());
+        }
+
+        /*int randomId;
         user.setPassword(encoder.encode(user.getPassword()));
         do {
             randomId = random.nextInt(999999); // example: random int between 0 and 999999
-        } while (repo.existsById(randomId)); // ensure uniqueness
-
+        } while (repo.existsById(randomId));*/ // ensure uniqueness
 
         user.setOrganizations(org);
         repo.save(user);
-        log.info("service register user:{}",user);
+        log.info("service register user:{}", user);
         return user;
     }
 
     public String verify(Users user) {
-        log.info("service verify user:{}",user);
+        log.info("service verify user:{}", user);
         Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         if (authentication.isAuthenticated()) {
-            log.info("verify user isAuthenticated:{}",authentication.isAuthenticated());
+            log.info("verify user isAuthenticated:{}", authentication.isAuthenticated());
             return jwtService.generateToken(user.getUsername());
         } else {
             return "fail";
@@ -70,7 +77,6 @@ public class UserService {
         return ResponseEntity.ok(repo.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + id)));
     }
-
 
 
 }

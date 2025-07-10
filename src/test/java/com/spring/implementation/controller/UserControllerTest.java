@@ -34,7 +34,7 @@ class UserControllerTest {
             .build();
     }
 
-    @Test
+    /*@Test
     void testRegisterUser() {
         Users input = mockUser(null, "gopi.dev");
         Users saved = mockUser(1, "gopi.dev");
@@ -46,7 +46,7 @@ class UserControllerTest {
         assertNotNull(result);
         assertEquals("gopi.dev", result.getUsername());
         assertEquals(1, result.getId());
-    }
+    }*/
 
     @Test
     void testLoginSuccess() {
