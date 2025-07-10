@@ -48,7 +48,6 @@ public class UserService {
             randomId = random.nextInt(999999); // example: random int between 0 and 999999
         } while (repo.existsById(randomId)); // ensure uniqueness
 
-      //  user.setId(randomId);
 
         user.setOrganizations(org);
         repo.save(user);
