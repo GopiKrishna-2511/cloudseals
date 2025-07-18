@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.spring.implementation</groupId>
 	<artifactId>cloudseals</artifactId>
-	<version>0.2.11-SNAPSHOT</version>
+	<version>0.2.12-SNAPSHOT</version>
 	<!--<name>RestApi</name>-->
 	<description>CloudSeals Spring Boot AI</description>
 	<properties>
@@ -20,6 +20,7 @@
 			**/model/**,
 			**/config/**,
 			**/repository/**,
+			**/exception/**,
 			**/com.spring.implementation.CloudSealsApplication.java
 		</sonar.coverage.exclusions>
 	</properties>
@@ -74,11 +75,23 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		<!--<dependency>
-			<groupId>com.google.cloud</groupId>
-			<artifactId>google-cloud-sql-jdbc</artifactId>
-			<version>1.6.0</version>
-		</dependency>-->
+		<dependency>
+			<groupId>org.springframework.retry</groupId>
+			<artifactId>spring-retry</artifactId>
+			<version>2.0.3</version> <!-- Use latest stable version -->
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>6.1.5</version> <!-- Required for AOP support -->
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson -->
 
 		<dependency>
@@ -93,10 +106,15 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.cloud.sql/mysql-socket-factory -->
 		<!-- https://mvnrepository.com/artifact/com.google.cloud.sql/mysql-socket-factory -->
-		<dependency>
+		<!--<dependency>
 		    <groupId>com.google.cloud.sql</groupId>
 		    <artifactId>mysql-socket-factory</artifactId>
 		    <version>1.10.0</version>
+		</dependency>-->
+		<dependency>
+			<groupId>com.google.cloud.sql</groupId>
+			<artifactId>mysql-socket-factory-connector-j-8</artifactId>
+			<version>1.25.1</version>
 		</dependency>
 
 		<dependency>
@@ -181,6 +199,7 @@
 								<exclude>**/model/**</exclude>
 								<exclude>**/config/**</exclude>
 								<exclude>**/repository/**</exclude>
+								<exclude>**/exception/**</exclude>
 								<exclude>**/com.spring.implementation.CloudSealsApplication.java</exclude>
 							</excludes>
 

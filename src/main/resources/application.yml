@@ -14,30 +14,26 @@ spring:
       secret: a-string-secret-at-least-256-bits-long
       on-profile: local
   datasource:
-    url: jdbc:mysql://localhost:3306/MVPCLOUDSEALS
-    username: root
-    password: root
-  jpa:
-    hibernate:
-      ddl-auto: none
-
-
----
-spring:
-  jackson:
-    serialization:
-      FAIL_ON_EMPTY_BEANS: false
-  config:
-    activate:
-      on-profile: qa
-  datasource:
-    url: jdbc:mysql://172.20.96.5:3306/MVPCLOUDSEALS
+    url: jdbc:mysql://google/MVPCLOUDSEALS?
+         cloudSqlInstance=observability-459214:us-central1:cseals-mysqldb
+         &socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false
     username: gopi
     password: Gmail@123
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: gopikrishna.a@cloudseals.com
+    password: Sg@2511k
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   jpa:
+    show-sql: true
     hibernate:
       ddl-auto: none
-
 
 ---
 spring:

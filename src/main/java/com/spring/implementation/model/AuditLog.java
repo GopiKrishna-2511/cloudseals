@@ -18,17 +18,25 @@ public class AuditLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    /*@ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "organization_id", nullable = false)
-    private Organizations organizations;
+    private Organizations organizations;*/
+    @Column(name = "organization_id", nullable = false)
+    private Integer organizationId;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    /*@ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "agent_id", nullable = false)
-    private AiAgents aiAgents;
+    private AiAgents aiAgents;*/
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private Users users;
+    @Column(name = "agent_id", nullable = false)
+    private Integer agentId;
+
+   /* @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Users users;*/
+   @Column(name = "user_id", nullable = false)
+   private Integer userId;
+
 
     @Column(name = "event_type", nullable = false, length = 64)
     private String eventType;

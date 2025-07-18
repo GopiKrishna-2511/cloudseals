@@ -42,6 +42,15 @@ public class OrganizationController {
         return organizationService.createOrganization(organization);
     }
 
+
+    @PostMapping("/{userId}")
+    public ResponseEntity<Organizations> createOrganization(@PathVariable Long userId,@RequestBody Organizations organization) {
+
+        log.info("createOrganization : {}", organization);
+
+        return organizationService.createOrganization(organization);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Organizations> updateOrganization(@PathVariable Long id, @RequestBody Organizations organization) {
         log.info("updateOrganization : {}", organization);
