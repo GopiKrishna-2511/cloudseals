@@ -1,5 +1,7 @@
 package com.spring.implementation.service;
 
+import com.spring.implementation.events.EventPublisherService;
+import com.spring.implementation.events.UserRegisteredEvent;
 import com.spring.implementation.exception.DuplicateResourceException;
 import com.spring.implementation.exception.ResourceNotFoundException;
 import com.spring.implementation.model.ErrorResponse;
@@ -20,6 +22,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.util.Optional;
@@ -36,28 +39,31 @@ public class UserService {
     private final UserRepo repo;
     private final OrganizationRepository organizationRepository;
     private final Random random = new Random();
+    private final EventPublisherService publisher;
 
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
+    @Transactional
     public Users register(Users user) {
 
-        Organizations org = organizationRepository.findById(
+        /*Organizations org = organizationRepository.findById(
                         user.getOrganizations().getId().longValue())
-                .orElseThrow(() -> new ResourceNotFoundException("OrganizationId", "id", user.getOrganizations().getId().longValue()));
+                .orElseThrow(() -> new ResourceNotFoundException("OrganizationId", "id", user.getOrganizations().getId().longValue()));*/
 
         if (repo.findByUsername(user.getUsername()) != null) {
-            throw new DuplicateResourceException("User", "username", user.getUsername());
+            throw new DuplicateResourceException("User", "Duplicate username", user.getUsername());
         }
 
-        /*int randomId;
+        int randomId;
         user.setPassword(encoder.encode(user.getPassword()));
         do {
             randomId = random.nextInt(999999); // example: random int between 0 and 999999
-        } while (repo.existsById(randomId));*/ // ensure uniqueness
+        } while (repo.existsById(randomId)); // ensure uniqueness
 
-        user.setOrganizations(org);
+        //user.setOrganizations(org);
         repo.save(user);
+        publisher.publish(new UserRegisteredEvent(user.getEmail(), user.getUsername()));
         log.info("service register user:{}", user);
         return user;
     }
@@ -76,6 +82,10 @@ public class UserService {
     public ResponseEntity<Users> loadUserById(Integer id) throws UsernameNotFoundException {
         return ResponseEntity.ok(repo.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + id)));
+    }
+
+    public void deleteById(Integer id) throws UsernameNotFoundException {
+          repo.deleteById(id);
     }
 
 

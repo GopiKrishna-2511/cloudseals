@@ -50,4 +50,12 @@ public class UserController {
         return service.loadUserById(id);
     }
 
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<Users> deleteByUser(@PathVariable Integer id) {
+        log.info("get user: {}", id);
+        service.deleteById(id);
+        return  ResponseEntity.noContent().build();
+    }
+
+
 }
